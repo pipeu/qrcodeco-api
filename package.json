@@ -1,0 +1,28 @@
+{
+  "name": "qrcodeco-api",
+  "version": "0.0.1",
+  "description": "QRcode.co API",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pipeuinternet/qrcodeco-api.git"
+  },
+  "homepage": "https://github.com/pipeuinternet/qrcodeco-api#readme",
+  "dependencies": {
+    "lambda-api": "^0.10.6",
+    "moment": "^2.25.3",
+    "serverless-domain-manager": "^3.3.1",
+    "serverless-stage-manager": "^1.0.5",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "serverless-bundle": "^1.2.3",
+    "serverless-mocha-plugin": "^1.11.0",
+    "serverless-offline": "^5.10.1",
+    "serverless-plugin-tracing": "^2.0.0",
+    "standard": "^13.1.0"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "123",
+          "short_name": "123",
+          "types": [
+            "street_number"
+          ]
+        },
+        {
+          "long_name": "Avenida Brigadeiro Faria Lima",
+          "short_name": "Av. Brg. Faria Lima",
+          "types": [
+            "route"
+          ]
+        },
+        {
+          "long_name": "Pinheiros",
+          "short_name": "Pinheiros",
+          "types": [
+            "political",
+            "sublocality",
+            "sublocality_level_1"
+          ]
+        },
+        {
+          "long_name": "São Paulo",
+          "short_name": "São Paulo",
+          "types": [
+            "administrative_area_level_2",
+            "political"
+          ]
+        },
+        {
+          "long_name": "São Paulo",
+          "short_name": "SP",
+          "types": [
+            "administrative_area_level_1",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Brasil",
+          "short_name": "BR",
+          "types": [
+            "country",
+            "political"
+          ]
+        },
+        {
+          "long_name": "05426-100",
+          "short_name": "05426-100",
+          "types": [
+            "postal_code"
+          ]
+        }
+      ],
+      "formatted_address": "Av. Brg. Faria Lima, 123 - Pinheiros, São Paulo - SP, 05426-100, Brasil",
+      "geometry": {
+        "location": {
+          "lat": -23.5603606,
+          "lng": -46.6954915
+        },
+        "location_type": "RANGE_INTERPOLATED",
+        "viewport": {
+          "northeast": {
+            "lat": -23.5590116197085,
+            "lng": -46.69414251970851
+          },
+          "southwest": {
+            "lat": -23.5617095802915,
+            "lng": -46.69684048029151
+          }
+        }
+      },
+      "place_id": "EkhBdi4gQnJnLiBGYXJpYSBMaW1hLCAxMjMgLSBQaW5oZWlyb3MsIFPDo28gUGF1bG8gLSBTUCwgMDU0MjYtMTAwLCBCcmF6aWwiGhIYChQKEgn5kFC2pFfOlBGdqSK0LkarhxB7",
+      "types": [
+        "street_address"
+      ]
+    }
+  ],
+  "status": "OK"
+}

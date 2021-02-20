@@ -1,0 +1,17 @@
+{
+  "data": {
+    "shop": {
+      "name": "PIPEU MARKETPLACE - START",
+      "pickupInstructions": "Retirar com bag",
+      "pk": 59772,
+      "address": {
+        "addressFormatted": "Rua Davi Hume, 116 - Vila Mariana, São Paulo - SP, 04116-130, Brasil",
+        "addressComplement": "",
+        "position": {
+          "lat": -23.5947274,
+          "lng": -46.6248025
+        }
+      }
+    }
+  }
+}

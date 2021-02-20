@@ -1,0 +1,140 @@
+service: qrcodeco-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage,'dev'}
+  region: ${opt:region,'us-west-2'}
+  profile: default
+  timeout: 30
+  tracing: true # enable tracing
+  logs:
+      restApi: true
+
+  environment:
+    stage: ${self:custom.stage}
+    MESSAGE: ${self:custom.myEnvironment.MESSAGE.${self:custom.stage}}
+
+  iamRoleStatements:
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchGetItem
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:183778030492:table/qrcodeco"
+
+    - Effect: 'Allow'
+      Action:
+        - "lambda:InvokeFunction"
+        - "lambda:InvokeAsync"
+        - "sqs:ReceiveMessage"
+        - "sqs:DeleteMessage"
+        - "sqs:GetQueueAttributes"
+      Resource: "*"
+
+# Plugins.
+plugins:
+  - serverless-bundle
+  - serverless-offline # for development
+  - serverless-mocha-plugin # for development
+  - serverless-stage-manager
+  - serverless-domain-manager
+  - serverless-plugin-tracing
+
+# Functions
+functions:
+  service:
+    name: ${self:service}-${self:provider.stage}
+    handler: handler.router
+#    timeout: 15
+    events:
+      - http:
+          method: any
+          path: /{proxy+}
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - StoreId
+              - storeid
+
+#          authorizer:
+#            name: authorizerFunc
+#            type: request
+#            arn: arn:aws:lambda:${self:provider.region}:183778030492:function:pipeu-api-aws-custom-auth-${self:provider.stage}-authorize
+#            identitySource: method.request.header.Authorization #method.request.header.PIPEU_API_GATEWAY_MICROSERVICES_TOKEN
+#            resultTtlInSeconds: 0 # 3600 # cache policy for 1 hour
+
+# Custom variables
+custom:
+  region: ${opt:region, 'us-west-2'}
+  stage: ${opt:stage, self:provider.stage}
+  stages: # for stage manager
+    - dev
+    - staging
+    - prod
+  myEnvironment:
+    MESSAGE:
+      prod: "This is production environment"
+      dev: "This is development environment"
+      staging: "This is staging environment"
+
+
+  domains:
+    prod: api.qrcode.co
+    staging: staging-qrcode.co
+    dev: dev-qrcode.co
+  customDomain:
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    basePath: 'scan'
+    stage: "${self:custom.stage}"
+    createRoute53Record: true
+    endpointType: 'regional'
+
+  serverless-offline:
+#    httpsProtocol: "dev-certs"
+    resourceRoutes: true
+    port: 4000
+
+  bundle: # serverless-bundle package variable options
+    sourcemaps: true  # Enable source maps
+    caching: true     # Enable Webpack caching
+    stats: false      # Don't print out any Webpack output
+    linting: false     # Enable linting as a part of the build process
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,StoreId,storeid'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseDefault5XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,StoreId,storeid'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'

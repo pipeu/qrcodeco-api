@@ -1,0 +1,86 @@
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "321",
+          "short_name": "321",
+          "types": [
+            "street_number"
+          ]
+        },
+        {
+          "long_name": "Avenida Capitão Ene Garcês",
+          "short_name": "Av. Cap. Ene Garcês",
+          "types": [
+            "route"
+          ]
+        },
+        {
+          "long_name": "Centro",
+          "short_name": "Centro",
+          "types": [
+            "political",
+            "sublocality",
+            "sublocality_level_1"
+          ]
+        },
+        {
+          "long_name": "Boa Vista",
+          "short_name": "Boa Vista",
+          "types": [
+            "administrative_area_level_2",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Roraima",
+          "short_name": "RR",
+          "types": [
+            "administrative_area_level_1",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Brasil",
+          "short_name": "BR",
+          "types": [
+            "country",
+            "political"
+          ]
+        },
+        {
+          "long_name": "69304",
+          "short_name": "69304",
+          "types": [
+            "postal_code",
+            "postal_code_prefix"
+          ]
+        }
+      ],
+      "formatted_address": "Av. Cap. Ene Garcês, 321 - Centro, Boa Vista - RR, 69304, Brasil",
+      "geometry": {
+        "location": {
+          "lat": 2.8345939,
+          "lng": -60.68915259999999
+        },
+        "location_type": "RANGE_INTERPOLATED",
+        "viewport": {
+          "northeast": {
+            "lat": 2.835942880291502,
+            "lng": -60.68780361970849
+          },
+          "southwest": {
+            "lat": 2.833244919708498,
+            "lng": -60.6905015802915
+          }
+        }
+      },
+      "place_id": "EjpBdi4gQ2FwLiBFbmUgR2FyY8OqcywgMzIxIC0gQ2VudHJvLCBCb2EgVmlzdGEgLSBSUiwgQnJhemlsIhsSGQoUChIJ50HaQPAFk40RkA4p-BB7Xk8QwQI",
+      "types": [
+        "street_address"
+      ]
+    }
+  ],
+  "status": "OK"
+}

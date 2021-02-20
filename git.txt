@@ -1,0 +1,1 @@
+git add . && git commit -m "Release version 1.0.1" && git tag -a 1.0.1 -m "See CHANGELOG for 1.0.1 release" && git push --tags && git push

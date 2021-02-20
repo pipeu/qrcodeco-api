@@ -1,0 +1,18 @@
+{
+  "data": {
+    "createOrder": {
+      "success": true,
+      "shop": {
+        "pk": 12345,
+        "name": "Hello World Shop"
+      },
+      "orders": [
+        {
+          "pk": 4984534,
+          "url": "https://www.loggi.com/track/4984534"
+        }
+      ],
+      "errors": []
+    }
+  }
+}
