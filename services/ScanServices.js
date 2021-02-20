@@ -2,6 +2,8 @@
 const DynamoDB = require('aws-sdk/clients/dynamodb')
 const DocumentClient = new DynamoDB.DocumentClient()
 
+const { Table, Entity } = require('dynamodb-toolbox')
+
 // Instantiate a table
 const dynamoTable = new Table({
   // Specify table name (used by DynamoDB)

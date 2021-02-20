@@ -12,6 +12,7 @@
   },
   "homepage": "https://github.com/pipeuinternet/qrcodeco-api#readme",
   "dependencies": {
+    "dynamodb-toolbox": "^0.3.3",
     "lambda-api": "^0.10.6",
     "moment": "^2.25.3",
     "serverless-domain-manager": "^3.3.1",
