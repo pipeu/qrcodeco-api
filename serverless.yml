@@ -49,7 +49,7 @@ plugins:
   - serverless-offline # for development
   - serverless-mocha-plugin # for development
   - serverless-stage-manager
-#  - serverless-domain-manager
+  - serverless-domain-manager
   - serverless-plugin-tracing
 
 # Functions
@@ -96,16 +96,16 @@ custom:
       staging: "This is staging environment"
 
 
-#  domains:
-#    prod: api.qrcode.co
-#    staging: staging-qrcode.co
-#    dev: dev-qrcode.co
-#  customDomain:
-#    domainName: ${self:custom.domains.${self:custom.stage}}
-#    basePath: 'scan'
-#    stage: "${self:custom.stage}"
-#    createRoute53Record: true
-#    endpointType: 'regional'
+  domains:
+    prod: api.qrcode.co
+    staging: staging.qrcode.co
+    dev: dev.qrcode.co
+  customDomain:
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    basePath: 'scan'
+    stage: "${self:custom.stage}"
+    createRoute53Record: true
+    endpointType: 'regional'
 
   serverless-offline:
 #    httpsProtocol: "dev-certs"

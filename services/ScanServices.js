@@ -1,42 +1,35 @@
-// Require AWS SDK and instantiate DocumentClient
-const DynamoDB = require('aws-sdk/clients/dynamodb')
-const DocumentClient = new DynamoDB.DocumentClient()
+let AWS = require('aws-sdk')
+const ddb = new AWS.DynamoDB.DocumentClient()
 
-const { Table, Entity } = require('dynamodb-toolbox')
+
 
 // Instantiate a table
-const dynamoTable = new Table({
+const dynamoTable = {
   // Specify table name (used by DynamoDB)
   name: 'qrcodeco',
-
   // Define partition and sort keys
   partitionKey: 'pk',
-  sortKey: 'sk',
+  sortKey: 'sk'
+}
 
-  // Add the DocumentClient
-  DocumentClient
-})
-
-const Scan = new Entity({
+const Scan = {
   // Specify entity name
   name: 'Scan',
   created: 'created',
   modified: 'modified',
-
   // Define attributes
   attributes: {
     code: { partitionKey: true }, // flag as partitionKey - qrcode code like GDFQSX or https://qrcode.co/coze/loja
     sk: { hidden: true, sortKey: true }, // flag as sortKey and mark hidden
     status: ['sk',0], // composite key mapping
-    created: ['sk',1], // composite key mapping
+    _ct: ['sk',1], // composite key mapping
     store_id: { type: 'number' }, // set the attribute type
     store_name: { type: 'string' }, // set the attribute type
     scans: { type: 'number' } // set the attribute type
   },
-
   // Assign it to our table
   table: dynamoTable
-})
+}
 
 
 
@@ -48,35 +41,54 @@ class ScanServices {
   async increment (storeId, storeName, codePageOther) {
     console.log(`increment ${storeId} ${storeName} ${codePageOther}`)
 
+    let item = {
+      pk: codePageOther,
+      sk: 'active',
+      store_id: storeId,
+      store_name: storeName,
+      status: 'active',
+      // scans: 2,
+      created: new Date().toISOString(),
+      modified: new Date().toISOString()
+    }
+
+    // https://stackoverflow.com/questions/40561484/what-data-type-should-be-use-for-timestamp-in-dynamodb
+    // Save date as epoch as well to be able to do queries in date in a differente way
+    var date = new Date();
+    var epoch = date.getTime();
+    // converting back to date-time
+    var initial_date = new Date(epoch);
+
+    // FilterExpression: “start_date BETWEEN :date1 and :date2”
+
     try {
-
-      // Create my item (using table attribute names or aliases)
-      // let item = {
-      //   code: 'https://qrcode.co/coze/loja',
-      //   store_id: storeId,
-      //   store_name: storeName,
-      //   status: 'active',
-      // }
-
-      let item = {
-        code: codePageOther,
-        store_id: storeId,
-        store_name: storeName,
-        status: 'active',
-        scans: { $add: 1 }
+      let params = {
+        TableName: 'qrcodeco',
+        Key: {
+          'pk': codePageOther,
+          'sk': 'active'
+        },
+        Item: item,
+        UpdateExpression:
+            'SET scans = if_not_exists(scans, :initial) + :incr, store_id = :storeId, store_name = :storeName',
+        ExpressionAttributeValues: {
+          ':initial': 0,
+          ':incr': 1,
+          ':storeId': storeId,
+          ':storeName': storeName
+        },
+        ReturnValues: 'UPDATED_NEW'
       }
 
-      // Use the 'put' method of Customer
-      let result = await Scan.put(item)
-      console.log(`result increment scan `, result)
-
-      return result
+      let result = await ddb.update(params).promise()
+      console.log('result', result)
 
     }catch (err) {
-      console.log('Error while increment scan : ', err)
+      console.log('Error while increment : ', err)
       throw err
     }
   }
+
 
 }
 

@@ -41,7 +41,7 @@ app.put('/increment', async (req, res) => {
   console.log('increment scan req.body', req.body)
   try {
 
-    await service.increment(req.body)
+    await service.increment(req.body.store_id, req.body.store_name, req.body.code)
 
     return generateResult('ok', 'incremented')
 
