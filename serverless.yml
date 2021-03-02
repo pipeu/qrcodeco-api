@@ -83,7 +83,7 @@ functions:
 
 # Custom variables
 custom:
-  region: ${opt:region, 'us-west-2'}
+  region: ${opt:region, self:provider.region}
   stage: ${opt:stage, self:provider.stage}
   stages: # for stage manager
     - dev
